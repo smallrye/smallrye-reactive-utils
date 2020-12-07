@@ -1,18 +1,17 @@
 package io.vertx.mutiny.auth;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import io.vertx.ext.auth.authentication.UsernamePasswordCredentials;
 import io.vertx.ext.auth.htpasswd.HtpasswdAuthOptions;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.auth.User;
-import io.vertx.mutiny.ext.auth.authentication.Credentials;
 import io.vertx.mutiny.ext.auth.authorization.PermissionBasedAuthorization;
 import io.vertx.mutiny.ext.auth.htpasswd.HtpasswdAuth;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class HtPasswordAuthTest {
 
@@ -37,35 +36,35 @@ public class HtPasswordAuthTest {
     @Test
     public void md5() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("md5", "myPassword");
-        User user = authProviderCrypt.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+        User user = authProviderCrypt.authenticate(credentials).await().indefinitely();
         assertNotNull(user);
     }
 
     @Test
     public void sha1() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("sha1", "myPassword");
-        User user = authProviderCrypt.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+        User user = authProviderCrypt.authenticate(credentials).await().indefinitely();
         assertNotNull(user);
     }
 
     @Test
     public void crypt() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("crypt", "myPassword");
-        User user = authProviderCrypt.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+        User user = authProviderCrypt.authenticate(credentials).await().indefinitely();
         assertNotNull(user);
     }
 
     @Test
     public void plaintext() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("plaintext", "myPassword");
-        User user = authProviderPlainText.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+        User user = authProviderPlainText.authenticate(credentials).await().indefinitely();
         assertNotNull(user);
     }
 
     @Test
     public void authzFalse() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("md5", "myPassword");
-        User user = authProviderUsersAreAuthorizedForNothing.authenticate(Credentials.newInstance(credentials)).await()
+        User user = authProviderUsersAreAuthorizedForNothing.authenticate(credentials).await()
                 .indefinitely();
         assertNotNull(user);
         assertFalse(PermissionBasedAuthorization.create("something").match(user));

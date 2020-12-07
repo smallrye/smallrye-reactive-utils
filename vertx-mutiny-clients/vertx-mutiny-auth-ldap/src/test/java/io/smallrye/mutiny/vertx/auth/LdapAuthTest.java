@@ -20,7 +20,6 @@ import io.vertx.ext.auth.authentication.UsernamePasswordCredentials;
 import io.vertx.ext.auth.ldap.LdapAuthenticationOptions;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.auth.User;
-import io.vertx.mutiny.ext.auth.authentication.Credentials;
 import io.vertx.mutiny.ext.auth.ldap.LdapAuthentication;
 
 @CreateDS(name = "myDS", partitions = { @CreatePartition(name = "test", suffix = "dc=myorg,dc=com") })
@@ -52,7 +51,7 @@ public class LdapAuthTest {
     @Test
     public void testSimpleAuthenticate() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("tim", "sausages");
-        User user = provider.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+        User user = provider.authenticate(credentials).await().indefinitely();
         assertNotNull(user);
     }
 
@@ -60,7 +59,7 @@ public class LdapAuthTest {
     public void testSimpleAuthenticateFailWrongPassword() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("tim", "wrongpassword");
         try {
-            provider.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+            provider.authenticate(credentials).await().indefinitely();
         } catch (CompletionException e) {
             assertTrue(e.getMessage().contains("INVALID_CREDENTIALS"));
         }
@@ -70,7 +69,7 @@ public class LdapAuthTest {
     public void testSimpleAuthenticateFailWrongUser() {
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("frank", "sausages");
         try {
-            provider.authenticate(Credentials.newInstance(credentials)).await().indefinitely();
+            provider.authenticate(credentials).await().indefinitely();
         } catch (CompletionException e) {
             assertTrue(e.getMessage().contains("INVALID_CREDENTIALS"));
         }
