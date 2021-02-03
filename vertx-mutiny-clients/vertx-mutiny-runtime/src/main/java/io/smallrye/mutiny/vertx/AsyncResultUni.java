@@ -21,7 +21,7 @@ public class AsyncResultUni<T> extends AbstractUni<T> implements Uni<T> {
     }
 
     @Override
-    protected void subscribing(UniSubscriber<? super T> downstream) {
+    public void subscribe(UniSubscriber<? super T> downstream) {
         AtomicBoolean terminated = new AtomicBoolean();
         downstream.onSubscribe(() -> terminated.set(true));
 
