@@ -49,7 +49,7 @@
         
         <vertx.version>4.1.1</vertx.version>
         <mutiny.version>0.19.2</mutiny.version>
-        <jackson.version>2.12.3</jackson.version>
+        <jackson.version>2.12.4</jackson.version>
         <reactive-streams.version>1.0.3</reactive-streams.version>
 
         <rxjava3.version>3.0.13</rxjava3.version>
