@@ -15,7 +15,7 @@
     <properties>
         <gen-source-groupId>io.vertx</gen-source-groupId>
         <gen-source-artifactId>vertx-core</gen-source-artifactId>
-        <gen-source-version>${vertx.version}</gen-source-version>
+        <gen-source-version>4.1.1</gen-source-version>
         <gen.output>${project.build.directory}/sources/java</gen.output>
     </properties>
 
